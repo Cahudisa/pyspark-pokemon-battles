@@ -1,0 +1,27 @@
+# Data layers (raw + intermediate) — not tracked, see README for download instructions
+data/bronze/
+data/silver/
+
+# Spark / Hadoop local runtime artifacts
+tools/hadoop/bin/*.exe
+tools/hadoop/bin/*.dll
+spark-warehouse/
+metastore_db/
+derby.log
+test_output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Power BI lock files
+~$*.pbix
