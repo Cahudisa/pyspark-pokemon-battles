@@ -13,6 +13,34 @@
 
 ---
 
+## 📈 Key Findings
+
+Based on **~12.8 million simulated battle outcomes** (~6.4M battles × 2 participants each) across all possible Pokémon matchups.
+
+**Which type wins the most?**
+Dragon leads decisively at **70.3% win rate**, followed by Flying (64.1%) and Steel (63.3%). Bug is the weakest at **38.8%**, followed by Poison (42.3%) and Normal (43.6%) — consistent with Dragon/Steel/Flying's few weaknesses and Bug's poor offensive/defensive profile in the real games.
+
+**Does Speed matter more than type advantage?** Yes, decisively.
+
+| Type advantage | Faster Pokémon wins | Slower Pokémon wins | Speed multiplier |
+|---|---|---|---|
+| Immune | 19.3% | 12.3% | 1.6x |
+| Resisted | 40.8% | 12.7% | **3.2x** |
+| Neutral | 71.0% | 28.8% | 2.5x |
+| Super effective | 90.8% | 54.5% | 1.7x |
+
+Being faster multiplies win probability by 1.6x–3.2x in every type-advantage bucket — the effect is strongest exactly when a Pokémon's type is at a disadvantage, where Speed nearly triples its odds.
+
+**Do legendary Pokémon really win more?** Confirmed, not a myth — **81.6% win rate for legendaries vs. 47.2% for non-legendaries**.
+
+**Is there generational power creep?** Not observed — win rates by generation range narrowly from 46.9% (Gen 2) to 54.4% (Gen 4), with no upward trend across generations.
+
+**Does the simulation match the official type chart?** Correlation of **0.65** between simulated win rate and the official type multiplier — strong and directionally correct (all 0.0-multiplier immunities reproduced exactly, e.g. Ground vs. Flying, Psychic vs. Dark), but not perfect, because base stats also drive outcomes independent of type (e.g. Steel beat Poison 100% of the time despite a neutral 1.0 type multiplier, purely on stat advantage).
+
+**Does simulation scale matter?** Yes — several types shifted 15–20 points between the original 50K-battle dataset and the millions-scale simulation (e.g. Fairy: 32.9% → 49.8%). Types with few original battles (like Fairy, with only 2,151) had noisy, unstable estimates; the large-scale simulation gives statistically stable win rates.
+
+---
+
 ## 🏗️ Architecture
 
 ```
@@ -89,7 +117,16 @@ PySpark needs `winutils.exe` and `hadoop.dll` to write files on Windows:
    ```bash
    conda env config vars set HADOOP_HOME=<full-path-to-project>\tools\hadoop -n pyspark-pokemon-battles
    ```
-4. Add `tools\hadoop\bin` to the env's PATH via an activate script (see `docs/` or project notes) so the `.dll` loads correctly.
+4. `HADOOP_HOME` alone isn't enough — `hadoop.dll` also needs to be on the PATH for the JVM to load it as a native library. Add it via a Conda activate script so it's scoped to this environment only:
+   ```bash
+   mkdir "%CONDA_PREFIX%\etc\conda\activate.d"
+   notepad "%CONDA_PREFIX%\etc\conda\activate.d\zz_hadoop_path_activate.bat"
+   ```
+   Paste this content and save:
+   ```bat
+   @echo off
+   set "PATH=%HADOOP_HOME%\bin;%PATH%"
+   ```
 5. Reactivate and verify:
    ```bash
    conda deactivate
