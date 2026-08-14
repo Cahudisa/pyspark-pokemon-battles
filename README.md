@@ -20,6 +20,8 @@ Based on **~12.8 million simulated battle outcomes** (~6.4M battles × 2 partici
 **Which type wins the most?**
 Dragon leads decisively at **70.3% win rate**, followed by Flying (64.1%) and Steel (63.3%). Bug is the weakest at **38.8%**, followed by Poison (42.3%) and Normal (43.6%) — consistent with Dragon/Steel/Flying's few weaknesses and Bug's poor offensive/defensive profile in the real games.
 
+![Win rate by type](reports/figures/win_rate_by_type.png)
+
 **Does Speed matter more than type advantage?** Yes, decisively.
 
 | Type advantage | Faster Pokémon wins | Slower Pokémon wins | Speed multiplier |
@@ -31,13 +33,23 @@ Dragon leads decisively at **70.3% win rate**, followed by Flying (64.1%) and St
 
 Being faster multiplies win probability by 1.6x–3.2x in every type-advantage bucket — the effect is strongest exactly when a Pokémon's type is at a disadvantage, where Speed nearly triples its odds.
 
+![Speed vs type advantage](reports/figures/speed_vs_type_advantage.png)
+
 **Do legendary Pokémon really win more?** Confirmed, not a myth — **81.6% win rate for legendaries vs. 47.2% for non-legendaries**.
+
+![Win rate by legendary status](reports/figures/win_rate_by_legendary.png)
 
 **Is there generational power creep?** Not observed — win rates by generation range narrowly from 46.9% (Gen 2) to 54.4% (Gen 4), with no upward trend across generations.
 
+![Win rate by generation](reports/figures/win_rate_by_generation.png)
+
 **Does the simulation match the official type chart?** Correlation of **0.65** between simulated win rate and the official type multiplier — strong and directionally correct (all 0.0-multiplier immunities reproduced exactly, e.g. Ground vs. Flying, Psychic vs. Dark), but not perfect, because base stats also drive outcomes independent of type (e.g. Steel beat Poison 100% of the time despite a neutral 1.0 type multiplier, purely on stat advantage).
 
+![Type matchup matrix: simulated vs official](reports/figures/type_matchup_matrix.png)
+
 **Does simulation scale matter?** Yes — several types shifted 15–20 points between the original 50K-battle dataset and the millions-scale simulation (e.g. Fairy: 32.9% → 49.8%). Types with few original battles (like Fairy, with only 2,151) had noisy, unstable estimates; the large-scale simulation gives statistically stable win rates.
+
+![Original vs simulated win rate comparison](reports/figures/win_rate_comparison_original_vs_simulated.png)
 
 ---
 
@@ -64,7 +76,8 @@ Kaggle CSVs (pokemon.csv, combats.csv)
                           trends — business metrics ready for BI
       │
       ▼
- Power BI Dashboard     → Interactive battle analytics report
+ Visualization Notebook → Matplotlib/Seaborn charts answering
+ (Python)                 every business question, no BI tool required
 ```
 
 ---
@@ -89,7 +102,7 @@ Kaggle CSVs (pokemon.csv, combats.csv)
 | Environment | Conda (Python 3.10, OpenJDK 17, PySpark 3.5.1) |
 | Storage | Parquet (Bronze → Silver → Gold) |
 | Orchestration | Jupyter Notebooks |
-| Business Intelligence | Power BI |
+| Visualization | Matplotlib, Seaborn |
 | Version Control | Git, GitHub |
 
 ---
@@ -142,7 +155,8 @@ Download `pokemon.csv` and `combats.csv` from Kaggle and place them in `data/bro
 01_bronze_ingest.ipynb        → raw ingestion
 02_silver_transform.ipynb     → cleaning and standardization
 03_battle_simulation.ipynb    → distributed Monte Carlo battle simulation
-04_gold_metrics.ipynb         → business metrics for Power BI
+04_gold_metrics.ipynb         → business metrics
+05_visualization.ipynb        → charts answering every business question
 ```
 
 ---
