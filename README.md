@@ -53,6 +53,18 @@ Being faster multiplies win probability by 1.6x–3.2x in every type-advantage b
 
 ---
 
+## 💼 Business Impact — Beyond Pokémon
+
+This project is entertainment-themed, but every technique used transfers directly to real business problems:
+
+- **Distributed Monte Carlo simulation** (the core of this project) is the same technique used for **risk modeling, insurance pricing, and financial forecasting** — anywhere you need to simulate thousands/millions of random scenarios to estimate a probability distribution instead of relying on a single deterministic guess.
+- **Segment performance analysis** (win rate by type) mirrors identifying **underperforming product lines or customer segments** in a business — Bug-type's 38.8% win rate is structurally analogous to flagging a segment for resource reallocation or strategic review.
+- **Speed vs. type advantage** (a 1.6x–3.2x win-rate multiplier from being faster) maps directly to **decision latency in business systems** — e.g., a fraud-detection system that responds in milliseconds can outperform a more "accurate" one that responds too slowly, the same way a fast but type-disadvantaged Pokémon can still win.
+- **The "does simulation scale matter?" finding** (small-sample noise vs. large-scale stability) is the same statistical argument behind **why A/B tests need minimum sample sizes** before a business trusts a conclusion — the Fairy-type swing (32.9% → 49.8%) is a concrete, visual example of what happens when you decide too early.
+- **Validating simulated results against the official type chart** (0.65 correlation, with explainable outliers like Steel vs. Poison) mirrors **validating a predictive model against known business rules** — when the model and the rules disagree, that disagreement is often the most valuable insight, not a bug to hide.
+
+---
+
 ## 🏗️ Architecture
 
 ```
